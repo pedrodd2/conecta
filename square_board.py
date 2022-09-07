@@ -1,4 +1,5 @@
 from unittest import result
+from list_utils import  transpose
 from linear_board import LinearBoard
 from settings import BOARD_LENGTH, VICTORY_STRIKE
 
@@ -18,6 +19,12 @@ class  SquareBoard():
     def __init__(self):
         self._columns = [LinearBoard() for i in range(BOARD_LENGTH)]
     
+        #dunders mnnetodos magicos
+
+    def __repr__(self):
+        return f'{self.__class__}:{self._columns}'
+
+    
     def is_full(self):
         """
         True si todos los LinearBoards estan llenos
@@ -26,6 +33,13 @@ class  SquareBoard():
         for lb in self._columns:
             result = result and lb.is_full()
         return result
+    
+    def as_matrix(self):
+        """
+        Devuelve una representación en fromato de matriz, es decir,
+        lista de listas.
+        """
+        return list(map(lambda x: x._column, self._columns))
     
     #Detecta victorias
     def is_victory(self, char):
@@ -38,7 +52,14 @@ class  SquareBoard():
         return result  
     
     def _any_horizontal_victory(self, char):
-        return False
+        # Transponemos _columns
+        transp = transpose(self.as_matrix())
+        # Creamos un tablero temporal con esa matriz transpuesta
+        tmp = SquareBoard.fromList(transp)
+
+        # comprobamos si tiene una victoria temporal
+        return tmp._any_vertical_victory(char)
+
 
     def _any_rising_victory(self, char):
         return False
@@ -46,10 +67,7 @@ class  SquareBoard():
     def _any_sinking_victory(self, char):
         return False  
 
-    #dunders mnnetodos magicos
 
-    def __repr__(self):
-        return f'{self.__class__}:{self._columns}'
 
 
         

@@ -53,4 +53,32 @@ def find_streak(list, needle, n):
         return False
             
 
+def first_elements(list_of_lists):
+    """
+    Recibe una lista de listas y devuelve una lista
+    con los primeros elementos de la original
+    """
+    return nth_elements(list_of_lists, 0)
 
+def nth_elements(list_of_lists, n):
+    """
+    Recibe una lista de listas y devuelve una lista
+    con los enésimos elementos de la original
+    """
+    result = []
+    for list in list_of_lists:
+        result.append(list[n])
+    return result
+
+def transpose(matrix):
+    """
+    Recibe una matriz y devuelve su transpuesta
+    """
+    # Creo un amatriz vacía y la llamo transp
+    transp = []
+    # Recorremos todas las columnas de la matriz original
+    for n in range(len(matrix[0])):
+        # extraigo los elementos enésimos y los encasqueto a transp
+        transp.append(nth_elements(matrix, n))
+    # devuelvo trnasp
+    return transp
