@@ -82,3 +82,37 @@ def transpose(matrix):
         transp.append(nth_elements(matrix, n))
     # devuelvo trnasp
     return transp
+
+def displace(l, distance, filler=None):
+    if distance == 0:
+        return l
+    elif distance > 0:
+        filling = [filler] * distance
+        res = filling + l
+        res = res[:-distance]
+        return res
+    else:
+        filling = [filler] * abs(distance)
+        res = l + filling
+        res = res[abs(distance):]
+        return res
+
+def displace_matrix(m, filler=None):
+    # creamos una matriz vacía
+    d = []
+    # por cada calumna de la matriz original la desplazamos su índice -1
+    for i in range(len(m)):
+        # añadimos la columna desplazada a m
+        d.append(displace(m[i], i - 1, filler))
+    
+    # devolvemos d
+    return d
+
+def reverse_list(l):
+    return list(reversed(l))
+
+def reverse_matrix(matrix):
+    rm = []
+    for col in matrix:
+        rm.append(reverse_list(col))
+    return rm

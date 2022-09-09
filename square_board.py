@@ -1,5 +1,5 @@
 from unittest import result
-from list_utils import  transpose
+from list_utils import displace_matrix, reverse_matrix, transpose
 from linear_board import LinearBoard
 from settings import BOARD_LENGTH, VICTORY_STRIKE
 
@@ -62,10 +62,24 @@ class  SquareBoard():
 
 
     def _any_rising_victory(self, char):
-        return False
+        # obtener las columnas
+        m = self.as_matrix()
+        # las invertimos
+        rm = reverse_matrix(m)
+        # creamos tablero temporal con esa matriz
+        tmp = SquareBoard.fromList(rm)
+        # devolvemos si tiene una victoria descendente
+        return tmp._any_sinking_victory(char)
 
     def _any_sinking_victory(self, char):
-        return False  
+        # Obtenemos las columnas como una matriz
+        m = self.as_matrix()
+        # la desplazamos
+        d = displace_matrix(m)
+        # creamos un tablero temporal con esa matriz
+        tmp = SquareBoard.fromList(d)
+        # averiguamos si tiene una vitroia horizontal
+        return tmp._any_horizontal_victory(char) 
 
 
 
